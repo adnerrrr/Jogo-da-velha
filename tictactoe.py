@@ -21,24 +21,8 @@ def jogada(play):
         case _:
             print("Jogada inválida, tente novamente: ")
             return jogada(int(input()))
-
-tabuleiro = [[" ", " ", " "], [" ", " ", " "], [" ", " ", " "]]
-win = False
-
-for linha in tabuleiro:                           
-        print(" | ".join(linha))
-
-for i in range(9):
-    if i % 2 == 0:
-        jog = "X"
-    else:
-        jog = "O"
-
-    jogada(int(input("Onde deseja jogar? (1 - 9) ")))
-
-    for linha in tabuleiro:                                    #Tabuleiro
-        print(" | ".join(linha))
-
+def vitoria(tabuleiro):
+    win = False
     match tabuleiro:
         case tabuleiro if (tabuleiro[0] == ["X"] * 3) or (tabuleiro[0] == ["O"] * 3):                     #Vitória
             print(f"Jogador {tabuleiro[0][0]} ganhou!")
@@ -64,5 +48,22 @@ for i in range(9):
         case tabuleiro if tabuleiro[0][2] == tabuleiro[1][1] == tabuleiro[2][0] != " ":
             print(f"Jogador {tabuleiro[0][2]} ganhou!")
             win = True
+        case _:
+            return win, tabuleiro
+tabuleiro = [[" ", " ", " "], [" ", " ", " "], [" ", " ", " "]]
+win = False
+for linha in tabuleiro:                           
+        print(" | ".join(linha))
+for i in range(9):
+    if i % 2 == 0:
+        jog = "X"
+    else:
+        jog = "O"
+    jogada(int(input("Onde deseja jogar? (1 - 9) ")))
+    for linha in tabuleiro:                                    #Tabuleiro
+        print(" | ".join(linha))
+    vitoria(tabuleiro)
     if win == True:
         break
+if win == False:
+    print("Deu velha :/")
